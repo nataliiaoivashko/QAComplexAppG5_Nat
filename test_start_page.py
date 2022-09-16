@@ -19,7 +19,7 @@ class TestStartPage:
         driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
         # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
 
-        # Open page
+        # Open page !!!
         driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
 
         # fill login and or find elem
