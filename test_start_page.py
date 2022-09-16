@@ -111,11 +111,13 @@ class TestStartPage:
 
         # Fill registration email (correctly)
         email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
+        print(email)
         email.send_keys("you@example1.com")
         sleep(1)
 
         # Fill registration password (correctly)
         password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
+        print(password)
         password.send_keys("whatevertest55")
         sleep(1)
 
