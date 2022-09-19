@@ -50,8 +50,8 @@ class TestStartPage:
         """
             - Create driver
             - Open page
-            - Clear login!!!!
-            - Clear password!!!!
+            - Clear login
+            - Clear password
             - Click button
             - Verify error
             """
