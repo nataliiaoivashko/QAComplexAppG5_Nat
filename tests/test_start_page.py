@@ -8,24 +8,23 @@ from pages.start_page import StartPage
 from pages.utils import random_str, random_num
 
 
-# import pages
-# from time import sleep
-# from selenium.webdriver.common.by import By
-
-
 class TestStartPage:
-    log = logging.getLogger("[StartPAge]")
+    log = logging.getLogger("[StartPage]")
 
     @pytest.fixture(scope="function")
     def start_page(self):
+        # Pre-conditions
         driver = webdriver.Chrome(DRIVER_PATH)
         driver.get(BASE_URL)
+        driver.implicitly_wait(1)
+        # Steps
         yield StartPage(driver)
+        # Post-conditions
         driver.close()
 
     def test_incorrect_login(self, start_page):
         """
-        -Preconditions:
+        - Pre-conditions:
             - Create driver
             - Open page
         - Steps:
@@ -36,40 +35,39 @@ class TestStartPage:
         - Post-conditions:
             - Close driver
         """
-        # login as user
+        # Login as a user
         start_page.sign_in("User11", "Psw11")
-        self.log.info("Logged in as  non-existent user")
+        self.log.info("Logged in as non-existing user")
 
-        # verify error
+        # Verify error
         start_page.verify_sign_in_error()
-        self.log.info("error was verified")
+        self.log.info("Error was verified")
 
     def test_empty_login(self, start_page):
         """
-        -Preconditions:
-            - Create driver
-            - Open page
-        - Steps:
-            - EMPTY login
-            - EMPTY password
-            - Click button
-            - Verify error
-        - Post-conditions:
-            - Close driver
+        - Create driver
+        - Open page
+        - Clear login
+        - Clear password
+        - Click button
+        - Verify error
         """
-        # login as user
+        # Login as a user
         start_page.sign_in("", "")
-        self.log.info("Logged in as an empty user")
+        self.log.info("Logged in as non-existing user")
 
-        # verify error
+        # Verify error
         start_page.verify_sign_in_error()
-        self.log.info("empty user error was verified")
+        self.log.info("Error was verified")
 
-    def test_registration_login_check_successful(self, start_page):
+    def test_register(self, start_page):
         """
-        - Preconditions: Create driver, Open page
-        - Steps: Fill login, email & password fields, then click registration button
-        - Verify success (verify that Hello message shows up on next page)
+        - Pre-conditions:
+            - Open start page
+        - Steps:
+            - Fill email, login and password fields
+            - Click on Sign Up button
+            - Verify registration is successful
         """
         # Prepare data
         user = random_str()
@@ -77,12 +75,12 @@ class TestStartPage:
         email_value = f"{user}{random_num()}@mail.com"
         password_value = f"{random_str(6)}{random_num()}"
 
-        # Sign Up as the user
-        start_page.sign_up(username_value, email_value, password_value)
-        self.log.info("registered as a new user %s", username_value)
+        # Sign Up as a user
+        hello_page = start_page.sign_up_and_verify(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
 
-        # verify success message
-        start_page.verify_sign_up_success(username_value)
+        # Verify success message
+        hello_page.verify_success_sign_up(username_value)
         self.log.info("Hello message was verified")
 
 

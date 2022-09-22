@@ -10,9 +10,4 @@ class StartPageConstants:
     SIGN_UP_USERNAME_FIELD_XPATH = ".//input[@id='username-register']"
     SIGN_UP_EMAIL_FIELD_XPATH = ".// input[ @ id = 'email-register']"
     SIGN_UP_PASSWORD_FIELD_XPATH = ".//input[@id='password-register']"
-    SIGN_UP_BUTTON_FIELD_XPATH = ".//button[text()='Sign up for OurApp']"
-
-    # TODO: THIS IS ACTUALLY THE NEXT PAGE
-    HELLO_MESSAGE_XPATH = ".//h2"
-    HELLO_MESSAGE_USERNAME_XPATH = ".//strong"
-    HELLO_MESSAGE_TEXT = "Hello {username}, your feed is empty."
+    SIGN_UP_BUTTON_XPATH = ".//button[text()='Sign up for OurApp']"
