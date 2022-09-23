@@ -44,6 +44,42 @@ class StartPage(BasePage):
         # Click button
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
+    def verify_sign_up_error(self):
+        """Verify invalid Sign up login length error (login too short)"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
+
+    def verify_sign_up_error2(self):
+        """Verify invalid Sign up login length error (login too short)"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_LENGTH_TOO_LONG, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
+
+    def verify_sign_up_error3(self):
+        """Verify invalid Sign up login length error (login contains spaces or special characters)"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_SPACES, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
+
+    def verify_sign_up_error_password_length(self):
+        """Verify invalid Sign up password length error"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
+
+    def verify_sign_up_error_password_length2(self):
+        """Verify invalid Sign up password length error"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT_LENGTH_TOO_LONG, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
+
+    def verify_sign_up_error_email_format(self):
+        """Verify invalid Sign up email format"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_EMAIL_ERROR_XPATH1) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH1)}"
+
     @wait_until_ok(period=0.5)
     def click_sign_up_and_verify(self):
         """Click Sign Up button and verify"""

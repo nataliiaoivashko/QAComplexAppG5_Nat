@@ -5,7 +5,7 @@ from selenium import webdriver
 
 from constants.base import DRIVER_PATH, BASE_URL
 from pages.start_page import StartPage
-from pages.utils import random_str, random_num
+from pages.utils import random_str, random_num, random_num_len
 
 
 class TestStartPage:
@@ -47,8 +47,8 @@ class TestStartPage:
         """
         - Create driver
         - Open page
-        - Clear login
-        - Clear password
+        - Clear empty login
+        - Clear empty password
         - Click button
         - Verify error
         """
@@ -83,347 +83,190 @@ class TestStartPage:
         hello_page.verify_success_sign_up(username_value)
         self.log.info("Hello message was verified")
 
+    # ===============my own code that was refactored using new test framework:==================
 
-"""===============below code still has to be refactored using new test framework:==================="""
+    def test_register_login_too_short(self, start_page):
+        """
+        - Pre-conditions:
+            - Open start page
+        - Steps:
+            - Fill fields: email(as expected), login(incorrectly: too short) and password (as expected)
+            - Click on Sign Up button
+            - Verify error
+        """
+        # Prepare data
+        user = random_str(length=1)
+        username_value = f"{user}{random_num_len()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(6)}{random_num()}"
 
-# def test_registration_login_check_too_short():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (incorrectly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (correctly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (incorrectly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("Nt")
-#     sleep(1)
-#
-#     # Fill registration email (correctly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     print(email)
-#     email.send_keys("you@example1.com")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     print(password)
-#     password.send_keys("whatever_test55")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element2 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element2.text == "Username must be at least 3 characters.", f"Actual message:" \
-#                                                                              f" {error_element2.text}"
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_login_check_too_long():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (incorrectly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (correctly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (incorrectly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("Login_that_is_longer_than_30_characters")
-#     sleep(1)
-#
-#     # Fill registration email (correctly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     print(email)
-#     email.send_keys("you@example1.com")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     print(password)
-#     password.send_keys("whatever_test_55")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element2 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element2.text == "Username cannot exceed 30 characters.", f"Actual message:" \
-#                                                                            f" {error_element2.text}"
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_login_check_for_spaces():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (incorrectly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (correctly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (incorrectly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("contains1 space")
-#     sleep(1)
-#
-#     # Fill registration email (correctly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     email.send_keys("myself@example5.com")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("whatever_test55")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element2 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element2.text == "Username can only contain letters and numbers.", f"Actual message:" \
-#                                                                                     f" {error_element2.text}"
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_login_check_for_special_char():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (incorrectly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (correctly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (incorrectly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("special,./!#")
-#     sleep(1)
-#
-#     # Fill registration email (correctly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     email.send_keys("myself@example5.com")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("whatever_test55")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element2 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element2.text == "Username can only contain letters and numbers.", f"Actual message:" \
-#                                                                                     f" {error_element2.text}"
-#
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_email_check1():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (correctly)
-#     - Fill registration email (incorrectly)
-#     - Fill registration password (correctly)
-#     - click button "sign up for our app"
-#     - Verify error (verify that error message shows up AFTER button-click)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (correctly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     element.send_keys("Nata")
-#     sleep(1)
-#
-#     # Fill registration email (incorrectly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     email.send_keys("myself@example")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("whatever_test55")
-#     sleep(1)
-#
-#     # Click button "SIGN UP FOR OUR APP"
-#     button1 = driver.find_element(by=By.XPATH, value=".//button[text()='Sign up for OurApp']")
-#     button1.click()
-#     sleep(1)
-#
-#     # Verify error
-#     error_element3 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small']")
-#     assert error_element3.text == "You must provide a valid email address.", f"Actual message:" \
-#                                                                              f" {error_element3.text}"
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_email_check2():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (correctly)
-#     - Fill registration email (incorrectly)
-#     - Fill registration password (correctly)
-#     - Verify error (verify that error message shows up BEFORE button-click)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (correctly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     element.send_keys("Nata")
-#     sleep(1)
-#
-#     # Fill registration email (incorrectly)
-#     email = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     email.send_keys("myself_example1234qwerty")
-#     sleep(1)
-#
-#     # Fill registration password (correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("whatever_test_16")
-#     sleep(2)
-#
-#     # Verify error
-#     error_element4 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element4.text == "You must provide a valid email address.", f"Actual message:" \
-#                                                                              f" {error_element4.text}"
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_password_too_short():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (correctly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (too short incorrectly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (do correctly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("Nata")
-#     sleep(1)
-#
-#     # Fill registration email (do correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     password.send_keys("lifeguard85@gmail.com")
-#     sleep(1)
-#
-#     # Fill registration password (do incorrectly: try less than 12 char)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("less")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element1 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element1.text == "Password must be at least 12 characters.", f"Actual message:" \
-#                                                                               f" {error_element1.text}"
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
-#
-# def test_registration_password_too_long():
-#     """
-#     - Create driver
-#     - Open page
-#     - Fill registration login (correctly)
-#     - Fill registration email (correctly)
-#     - Fill registration password (incorrectly)
-#     - Verify error (verify that error message shows up)
-#     """
-#     # Create driver
-#     driver = webdriver.Chrome("/Users/Nata/PycharmProjects/QAComplexAppG6/chromedriver.exe")
-#     # C:\Users\Nata\PycharmProjects\QAComplexAppG6\chromedriver.exe
-#
-#     # Open page
-#     driver.get("https://qa-complex-app-for-testing.herokuapp.com/")
-#
-#     # fill registration login (do correctly)
-#     element = driver.find_element(by=By.XPATH, value=".//input[@id='username-register']")
-#     print(element)
-#     element.send_keys("Nata")
-#     sleep(1)
-#
-#     # Fill registration email (do correctly)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='email-register']")
-#     password.send_keys("test_email@examples.com")
-#     sleep(1)
-#
-#     # Fill registration password (do incorrectly: try less than 12 char)
-#     password = driver.find_element(by=By.XPATH, value=".//input[@id='password-register']")
-#     password.send_keys("this_password_exceeds_50_characters_for_testing_purposes")
-#     sleep(1)
-#
-#     # Verify error
-#     error_element1 = driver.find_element(by=By.XPATH, value=".//div[@class='alert alert-danger small "
-#                                                             "liveValidateMessage liveValidateMessage--visible']")
-#     assert error_element1.text == "Password cannot exceed 50 characters.", f"Actual message:" \
-#                                                                            f" {error_element1.text}"
-#     sleep(1)
-#
-#     # Close driver
-#     driver.close()
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error()
+        self.log.info("Error was verified")
+
+    def test_registration_login_check_too_long(self, start_page):
+        """
+        - Pre-conditions:
+            - Open start page
+        - Steps:
+            - Fill registration login (incorrectly: more than 30 characters)
+            - Fill registration email (correctly)
+            - Fill registration password (correctly)
+            - Verify error (verify that error message shows up)
+        """
+        # Prepare data
+        user = random_str(length=31)
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error2()
+        self.log.info("Error was verified")
+
+    def test_registration_login_check_for_spaces(self, start_page):
+        """
+        - Pre-conditions:
+            - Open start page
+        - Steps:
+            - Fill registration login (incorrectly: insert space)
+            - Fill registration email (correctly)
+            - Fill registration password (correctly)
+            - Verify error (verify that error message shows up)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user} {random_num()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error3()
+        self.log.info("Error was verified")
+
+    def test_registration_login_check_for_special_char(self, start_page):
+        """
+        - Pre-conditions:
+            - Open start page
+        - Steps:
+            - Fill registration login (incorrectly: special chars)
+            - Fill registration email (correctly)
+            - Fill registration password (correctly)
+            - Verify error (verify that error message shows up)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user},./!#{random_num()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error3()
+        self.log.info("Error was verified.")
+
+    # def test_registration_email_check(self, start_page):
+    #     """
+    #     - Pre-conditions: Open start page
+    #     - Steps:
+    #         - Fill registration login and password (correctly)
+    #         - Fill registration email (incorrectly "myself@example")
+    #         - Click button "Sign Up For Our App" & verify that error message shows up AFTER button-click)
+    #     """
+    #     # Prepare data
+    #     user = random_str()
+    #     username_value = f"{user}{random_num()}"
+    #     email_value = f"{user}{random_num()}@mail"
+    #     password_value = f"{random_str(6)}{random_num()}"
+    #
+    #     # Sign Up as a user
+    #     start_page.sign_up(username_value, email_value, password_value)
+    #     self.log.info("Signed Up as user %s", username_value)
+    #
+    #     # Verify error message
+    #     start_page.verify_sign_up_error_email_format()
+    #     self.log.info("Error was verified.")
+
+    def test_registration_email_check2(self, start_page):
+        """
+        - Open page
+        - Fill registration login (correctly)
+        - Fill registration email (incorrectly)
+        - Fill registration password (correctly)
+        - Verify error (verify that error message shows up BEFORE button-click)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}random"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error_email_format()
+        self.log.info("Error was verified. Wrong email format")
+
+    def test_registration_password_too_short(self, start_page):
+        """
+        Steps:
+        - Open page
+        - Fill registration login (correctly)
+        - Fill registration email (correctly)
+        - Fill registration password (too short incorrectly)
+        - Verify error (verify that error message shows up)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(3)}{random_num_len()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error_password_length()
+        self.log.info("Error was verified. password is too short ")
+
+    def test_registration_password_too_long(self, start_page):
+        """
+        - Create driver,Open page
+        - Fill registration login and email (correctly)
+        - Fill registration password (incorrectly: more than 50 chars passwords)
+        - Verify error (verify that error message shows up)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}@mail.com"
+        password_value = f"{random_str(51)}{random_num_len(11, 99)}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error_password_length2()
+        self.log.info("Error was verified. password is too long.")
+
+    # self.log.info(str(password_value))
+    # TODO: WHAT ID THERE ARE MULTIPLE ERRORS? HOW TO ASSERT 2-3 ERROR MESSAGES AT THE SAME TIME?
