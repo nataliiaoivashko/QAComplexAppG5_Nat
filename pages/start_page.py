@@ -35,7 +35,7 @@ class StartPage(BasePage):
         from pages.hello_page import HelloPage
         return HelloPage(self.driver)
 
-    @wait_until_ok(timeout=6, period=0.75)
+    @wait_until_ok(timeout=5, period=0.5)
     def click_sign_up_and_verify(self):
         """Click Sign Up button when the button is ready"""
         # Click button
@@ -99,7 +99,7 @@ class StartPage(BasePage):
         else:
             self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
-    @wait_until_ok(timeout=6, period=0.75)
+    @wait_until_ok(timeout=7, period=0.7)
     def click_sign_up_when_ready(self):
         """Click Sign Up button when the button is ready"""
         # Click button
