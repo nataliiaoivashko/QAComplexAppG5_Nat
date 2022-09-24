@@ -35,6 +35,13 @@ class StartPage(BasePage):
         from pages.hello_page import HelloPage
         return HelloPage(self.driver)
 
+    @wait_until_ok(timeout=6, period=0.75)
+    def click_sign_up_and_verify(self):
+        """Click Sign Up button when the button is ready"""
+        # Click button
+        self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
+        assert not self.is_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
+
     def sign_up(self, username, email, password):
         """Sign up as the user and verify that you're inside"""
         # Fill username
@@ -75,14 +82,34 @@ class StartPage(BasePage):
             f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
 
     def verify_sign_up_error_email_format(self):
-        """Verify invalid Sign up email format"""
+        """after button is clicked verify the invalid format of sign up email"""
         assert self.get_element_text(
             self.constants.SIGN_UP_EMAIL_ERROR_XPATH1) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
             f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH1)}"
 
-    @wait_until_ok(period=0.5)
-    def click_sign_up_and_verify(self):
-        """Click Sign Up button and verify"""
+    def verify_sign_up_error_email_format_rare(self):
+        """after button is clicked verify the invalid format of sign up email"""
+        assert self.get_element_text(
+            self.constants.SIGN_UP_EMAIL_ERROR_XPATH) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_EMAIL_ERROR_XPATH1) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH1)}"
+
+    def email_sign_up(self, username, email, password, verify=True):
+        """Sign up as the user and verify that you're inside"""
+        # Fill username
+        self.fill_field(xpath=self.constants.SIGN_UP_USERNAME_FIELD_XPATH, value=username)
+        self.fill_field(xpath=self.constants.SIGN_UP_EMAIL_FIELD_XPATH, value=email)
+        self.fill_field(xpath=self.constants.SIGN_UP_PASSWORD_FIELD_XPATH, value=password)
         # Click button
-        self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-        assert not self.is_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
+        if verify:
+            self.click_sign_up_and_verify()
+        else:
+            self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)

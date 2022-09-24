@@ -13,11 +13,11 @@ class StartPageConstants:
     SIGN_UP_PASSWORD_FIELD_XPATH = ".//input[@id='password-register']"
     SIGN_UP_BUTTON_XPATH = ".//button[text()='Sign up for OurApp']"
 
-    SIGN_UP_EMAIL_ERROR_XPATH1 = ".//div[@class='alert alert-danger small liveValidateMessage " \
-                                 "liveValidateMessage--visible']"
     SIGN_UP_LOGIN_ERROR_XPATH = ".//div[@class='alert alert-danger small liveValidateMessage " \
                                 "liveValidateMessage--visible'] "
-    SIGN_UP_EMAIL_ERROR_XPATH = ".//div[@class='alert alert-danger small']"  # to check why not working in test
+    SIGN_UP_EMAIL_ERROR_XPATH1 = ".//div[@class='alert alert-danger small liveValidateMessage " \
+                                 "liveValidateMessage--visible']"  # regular error email xpath
+    SIGN_UP_EMAIL_ERROR_XPATH = ".//div[@class='alert alert-danger small']"  # xpath that shows up rarely
     SIGN_UP_PASSWORD_ERROR_XPATH = ".//div[@class='alert alert-danger small liveValidateMessage " \
                                    "liveValidateMessage--visible'] "
     SIGN_UP_LOGIN_ERROR_TEXT_LENGTH = "Username must be at least 3 characters."

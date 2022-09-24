@@ -180,35 +180,13 @@ class TestStartPage:
         start_page.verify_sign_up_error3()
         self.log.info("Error was verified.")
 
-    # def test_registration_email_check(self, start_page):
-    #     """
-    #     - Pre-conditions: Open start page
-    #     - Steps:
-    #         - Fill registration login and password (correctly)
-    #         - Fill registration email (incorrectly "myself@example")
-    #         - Click button "Sign Up For Our App" & verify that error message shows up AFTER button-click)
-    #     """
-    #     # Prepare data
-    #     user = random_str()
-    #     username_value = f"{user}{random_num()}"
-    #     email_value = f"{user}{random_num()}@mail"
-    #     password_value = f"{random_str(6)}{random_num()}"
-    #
-    #     # Sign Up as a user
-    #     start_page.sign_up(username_value, email_value, password_value)
-    #     self.log.info("Signed Up as user %s", username_value)
-    #
-    #     # Verify error message
-    #     start_page.verify_sign_up_error_email_format()
-    #     self.log.info("Error was verified.")
-
-    def test_registration_email_check2(self, start_page):
+    def test_registration_email_check(self, start_page):
         """
         - Open page
-        - Fill registration login (correctly)
+        - Fill registration login & password (correctly)
         - Fill registration email (incorrectly)
-        - Fill registration password (correctly)
-        - Verify error (verify that error message shows up BEFORE button-click)
+        - Click "Sign Up"
+        - Verify error (verify that red error message shows up)
         """
         # Prepare data
         user = random_str()
@@ -223,6 +201,50 @@ class TestStartPage:
         # Verify error message
         start_page.verify_sign_up_error_email_format()
         self.log.info("Error was verified. Wrong email format")
+
+    def test_registration_email_check2(self, start_page):
+        """
+        - Open page
+        - Fill registration login & password (correctly)
+        - Fill registration email (incorrectly)
+        - Click "Sign Up"
+        - Verify error (verify that red error message shows up)
+        """
+        # Prepare data
+        user = random_str()
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}_random.com"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error_email_format()
+        self.log.info("Error was verified. Wrong email format")
+
+    def test_registration_email_check3(self, start_page):
+        """
+        - Open page
+        - Fill registration login & password (correctly)
+        - Fill registration email (incorrectly)
+        - Click "Sign Up"
+        - Verify error (verify that red error message shows up)
+        """
+        # Prepare data
+        user = random_str(9)
+        username_value = f"{user}{random_num()}"
+        email_value = f"{user}{random_num()}@mail54237example"
+        password_value = f"{random_str(6)}{random_num()}"
+
+        # Sign Up as a user
+        start_page.sign_up(username_value, email_value, password_value)
+        self.log.info("Signed Up as user %s", username_value)
+
+        # Verify error message
+        start_page.verify_sign_up_error_email_format_rare()
+        self.log.info("Error was verified. Incorrect email format")
 
     def test_registration_password_too_short(self, start_page):
         """
