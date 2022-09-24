@@ -224,7 +224,7 @@ class TestStartPage:
         start_page.verify_sign_up_error_email_format()
         self.log.info("Error was verified. Wrong email format")
 
-    def test_registration_email_check3(self, start_page):
+    def test_registration_email_check3(self, start_page):  # FAILS :(((
         """
         - Open page
         - Fill registration login & password (correctly)
@@ -239,7 +239,7 @@ class TestStartPage:
         password_value = f"{random_str(6)}{random_num()}"
 
         # Sign Up as a user
-        start_page.sign_up(username_value, email_value, password_value)
+        start_page.email_sign_up_new(username_value, email_value, password_value)
         self.log.info("Signed Up as user %s", username_value)
 
         # Verify error message
