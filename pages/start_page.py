@@ -99,12 +99,12 @@ class StartPage(BasePage):
         else:
             self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
-    @wait_until_ok(timeout=7, period=0.7)
+    @wait_until_ok(timeout=5, period=0.5)
     def click_sign_up_when_ready(self):
         """Click Sign Up button when the button is ready"""
         # Click button
         self.click(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
-        assert not self.is_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
+        assert self.is_exists(xpath=self.constants.SIGN_UP_BUTTON_XPATH)
 
     def email_sign_up_new(self, username, email, password):
         """Sign up as the user and verify that you're inside"""
@@ -115,17 +115,18 @@ class StartPage(BasePage):
         # Click button
         self.click_sign_up_when_ready()
 
+    @wait_until_ok(timeout=5, period=0.5)
     def verify_sign_up_error_email_format_rare(self):
         """after button is clicked verify the invalid format of sign up email"""
         assert self.get_element_text(
             self.constants.SIGN_UP_EMAIL_ERROR_XPATH) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
             f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH)}"
-        # assert self.get_element_text(
-        #     self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT_LENGTH, \
-        #     f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
-        # assert self.get_element_text(
-        #     self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_LENGTH, \
-        #     f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
-        # assert self.get_element_text(
-        #     self.constants.SIGN_UP_EMAIL_ERROR_XPATH1) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
-        #     f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH1)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_PASSWORD_ERROR_XPATH) == self.constants.SIGN_UP_PASSWORD_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_PASSWORD_ERROR_XPATH)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_LOGIN_ERROR_XPATH) == self.constants.SIGN_UP_LOGIN_ERROR_TEXT_LENGTH, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_LOGIN_ERROR_XPATH)}"
+        assert self.get_element_text(
+            self.constants.SIGN_UP_EMAIL_ERROR_XPATH1) == self.constants.SIGN_UP_EMAIL_ERROR_TEXT, \
+            f"Actual message: {self.get_element_text(self.constants.SIGN_UP_EMAIL_ERROR_XPATH1)}"
