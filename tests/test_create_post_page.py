@@ -48,7 +48,7 @@ class TestCreatePostPage:
         # Verify the result
         create_post_page.verify_successfully_created()
 
-    def test_create_post_with_check(self, hello_page):
+    def test_create_complete_post_with_check_dropdown(self, hello_page):
         """
             - Pre-conditions:
             - Sign Up/Sign In as a user
@@ -58,14 +58,14 @@ class TestCreatePostPage:
             """
         # Navigate to create Post Page
         create_post_page = hello_page.header.navigate_to_create_post_page()
-
         # Create Post
         post = Post()
         post.fill_default()
-        create_post_page.create_post_with_checkbox(post)
-        sleep(5)
-
+        create_post_page.create_post_with_checkbox_dropdown(post)
+        sleep(1)
         # Verify the result
         create_post_page.verify_successfully_created()
+        create_post_page.verify_post_title(post)
+        create_post_page.verify_post_body(post)
         create_post_page.verify_checkbox()
         create_post_page.verify_dropdown_select()
