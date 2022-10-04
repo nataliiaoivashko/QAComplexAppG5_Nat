@@ -5,8 +5,9 @@ import pytest
 from selenium import webdriver
 
 from constants.base import DRIVER_PATH, BASE_URL
+from constants.create_post_page import CreatePostPageConsts
 from pages.start_page import StartPage
-from pages.utils import Post
+from pages.utils import Post, random_str
 
 
 class TestCreatePostPage:
@@ -69,3 +70,22 @@ class TestCreatePostPage:
         create_post_page.verify_post_body(post)
         create_post_page.verify_checkbox()
         create_post_page.verify_dropdown_select()
+
+    def test_create_full_post(self, hello_page):
+        """
+        - Pre-conditions:
+            - Sign Up/Sign In as a user
+        - Steps:
+            - Fill title, body, select check box, choose visibility adn click on crete button
+            - Verify that data match to expected
+        """
+        # Navigate to create Post Page
+        create_post_page = hello_page.header.navigate_to_create_post_page()
+
+        # Create Post
+        post = Post(title=random_str(15), body=random_str(20), unique=True,
+                    option=CreatePostPageConsts.OPTION_GROUP_MESSAGE_TEXT)
+        create_post_page.create_full_post(post)
+
+        # Verify the result
+        create_post_page.verify_full_post_data(post)
