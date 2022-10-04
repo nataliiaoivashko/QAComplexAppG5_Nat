@@ -17,3 +17,4 @@ class CreatePostPageConsts:
     CHECKBOX_UNIQUE_NO = ".//p[contains(.,'Is this post unique? : no')]"  # when "no" was selected
     CHECKBOX_YES_TEXT = "Is this post unique? : yes"
     CHECKBOX_NO_TEXT = "Is this post unique? : no"
+    IS_POST_UNIQUE_XPATH = ".//p[contains(text(), 'Is this post unique?')]"

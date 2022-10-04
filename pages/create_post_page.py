@@ -61,3 +61,35 @@ class CreatePostPage(BasePage):
         """Verify body"""
         assert self.get_element_text(
             xpath=self.constants.CREATED_BODY_CONTENT_XPATH.format(body=post.body)) == post.body
+
+    @log_decorator
+    def create_full_post(self, post):
+        """Create post using provided values"""
+        self.fill_field(xpath=self.constants.TITLE_FIELD_XPATH, value=post.title)
+        self.fill_field(xpath=self.constants.BODY_FIELD_XPATH, value=post.body)
+        # Click on checkbox if required
+        if post.unique:
+            self.click(xpath=self.constants.CHECKBOX_UNIQUE_POST_INPUT_XPATH)
+        # Click on list
+        self.click(xpath=self.constants.DROPDOWN_LIST_XPATH)
+        # Click on option
+        self.click(self.constants.VISIBILITY_SELECTION_XPATH.format(option=post.option))
+        self.click(xpath=self.constants.CREATE_POST_BUTTON_XPATH)
+
+    @log_decorator
+    def verify_full_post_data(self, post):
+        """Verify all post fields"""
+        # Verify title
+        assert self.get_element_text(xpath=self.constants.CREATED_TITLE_XPATH) == post.title, \
+            f"Actual: {self.get_element_text(xpath=self.constants.CREATED_TITLE_XPATH)}"
+        # Verify body
+        assert self.get_element_text(
+            xpath=self.constants.CREATED_BODY_CONTENT_XPATH.format(body=post.body)) == post.body
+        # Verify checkbox value
+        if post.unique:
+            assert "yes" in self.get_element_text(xpath=self.constants.IS_POST_UNIQUE_XPATH)
+        else:
+            assert "no" in self.get_element_text(xpath=self.constants.IS_POST_UNIQUE_XPATH)
+            # Verify selected option
+            assert self.get_element_text(xpath=self.constants.SELECTED_VISIBILITY_VALUE_XPATH) == post.option, \
+                f"Actual: {self.get_element_text(xpath=self.constants.SELECTED_VISIBILITY_VALUE_XPATH)}"
