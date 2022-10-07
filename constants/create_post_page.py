@@ -1,4 +1,5 @@
 class CreatePostPageConsts:
+
     TITLE_FIELD_XPATH = ".//input[@id='post-title']"
     BODY_FIELD_XPATH = ".//textarea[@id='post-body']"
     CREATE_POST_BUTTON_XPATH = ".//button[@class='btn btn-primary']"
@@ -18,3 +19,4 @@ class CreatePostPageConsts:
     CHECKBOX_YES_TEXT = "Is this post unique? : yes"
     CHECKBOX_NO_TEXT = "Is this post unique? : no"
     IS_POST_UNIQUE_XPATH = ".//p[contains(text(), 'Is this post unique?')]"
+    PROFILE_LINK_XPATH = ".//a[@href='/profile/{username}']"

@@ -93,3 +93,10 @@ class CreatePostPage(BasePage):
             # Verify selected option
             assert self.get_element_text(xpath=self.constants.SELECTED_VISIBILITY_VALUE_XPATH) == post.option, \
                 f"Actual: {self.get_element_text(xpath=self.constants.SELECTED_VISIBILITY_VALUE_XPATH)}"
+
+    @log_decorator
+    def navigate_to_profile(self, username):
+        """Navigate to author profile"""
+        self.click(self.constants.PROFILE_LINK_XPATH.format(username=username))
+        from pages.profile_page import ProfilePage
+        return ProfilePage(self.driver)
